@@ -37,10 +37,8 @@ get_arch() {
   local arch=""
 
   case "$(uname -m)" in
-    x86_64 | amd64) arch="64bit" ;;
-    i686 | i386) arch="32bit" ;;
-    armv6l | armv7l) arch="ARM" ;;
-    aarch64 | arm64) arch="ARM64" ;;
+    x86_64 | amd64) arch="amd64" ;;
+    aarch64 | arm64) arch="arm64" ;;
     *)
       fail "Arch '$(uname -m)' not supported!"
       ;;
@@ -54,12 +52,7 @@ get_platform() {
 
   case "$(uname | tr '[:upper:]' '[:lower:]')" in
     darwin) platform="darwin" ;;
-    linux) platform="Linux" ;;
-    windows) platform="Windows" ;;
-    openbsd) platform="OpenBSD" ;;
-    netbsd) platform="NetBSD" ;;
-    freebsd) platform="FreeBSD" ;;
-    dragonfly) platform="DragonFlyBSD" ;;
+    linux) platform="linux" ;;
     *)
       fail "Platform '$(uname -m)' not supported!"
       ;;
@@ -75,7 +68,7 @@ download_release() {
 	version="$1"
 	filename="$2"
 
-	local url="${GH_REPO}/releases/download/v${version}/bkl-${platform}-${arch}-v${version}.tar.gz"
+	url="${GH_REPO}/releases/download/v${version}/bkl-${platform}-${arch}-v${version}.tar.gz"
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
