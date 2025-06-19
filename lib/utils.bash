@@ -69,9 +69,8 @@ download_release() {
 	filename="$2"
 
 	url="${GH_REPO}/releases/download/v${version}/bkl-${platform}-${arch}-v${version}.tar.gz"
-	echo "* Downloading $TOOL_NAME release $version... from $url to $filename"
+	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
-	ls -alh "$filename"
 }
 
 install_version() {
@@ -89,7 +88,7 @@ install_version() {
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
-		#chmod +x "$install_path/$tool_cmd"
+		
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
