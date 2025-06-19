@@ -33,13 +33,50 @@ list_all_versions() {
 	list_github_tags
 }
 
+get_arch() {
+  local arch=""
+
+  case "$(uname -m)" in
+    x86_64 | amd64) arch="64bit" ;;
+    i686 | i386) arch="32bit" ;;
+    armv6l | armv7l) arch="ARM" ;;
+    aarch64 | arm64) arch="ARM64" ;;
+    *)
+      fail "Arch '$(uname -m)' not supported!"
+      ;;
+  esac
+
+  echo -n $arch
+}
+
+get_platform() {
+  local platform=""
+
+  case "$(uname | tr '[:upper:]' '[:lower:]')" in
+    darwin) platform="darwin" ;;
+    linux) platform="Linux" ;;
+    windows) platform="Windows" ;;
+    openbsd) platform="OpenBSD" ;;
+    netbsd) platform="NetBSD" ;;
+    freebsd) platform="FreeBSD" ;;
+    dragonfly) platform="DragonFlyBSD" ;;
+    *)
+      fail "Platform '$(uname -m)' not supported!"
+      ;;
+  esac
+
+  echo -n $platform
+}
+
 download_release() {
 	local version filename url
+	local platform=$(get_platform)
+	local arch=$(get_arch)
 	version="$1"
 	filename="$2"
 
 	url="$GH_REPO/archive/v${version}.tar.gz"
-
+	local url="${GH_REPO}/releases/download/v${version_path}/bkl-${platform}-${arch}-v${version_path}.tar.gz"
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
