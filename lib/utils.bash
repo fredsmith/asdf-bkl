@@ -69,7 +69,7 @@ download_release() {
 	filename="$2"
 
 	url="${GH_REPO}/releases/download/v${version}/bkl-${platform}-${arch}-v${version}.tar.gz"
-	echo "* Downloading $TOOL_NAME release $version... from $url"
+	echo "* Downloading $TOOL_NAME release $version... from $url to $filename"
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 	ls -alh "$filename"
 }
