@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for bkl.
 GH_REPO="https://github.com/gopatchy/bkl"
 TOOL_NAME="bkl"
 TOOL_TEST="bkl --version"
