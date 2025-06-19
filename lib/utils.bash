@@ -34,37 +34,37 @@ list_all_versions() {
 }
 
 get_arch() {
-  local arch=""
+	local arch=""
 
-  case "$(uname -m)" in
-    x86_64 | amd64) arch="amd64" ;;
-    aarch64 | arm64) arch="arm64" ;;
-    *)
-      fail "Arch '$(uname -m)' not supported!"
-      ;;
-  esac
+	case "$(uname -m)" in
+	x86_64 | amd64) arch="amd64" ;;
+	aarch64 | arm64) arch="arm64" ;;
+	*)
+		fail "Arch '$(uname -m)' not supported!"
+		;;
+	esac
 
-  echo -n $arch
+	echo -n $arch
 }
 
 get_platform() {
-  local platform=""
+	local platform=""
 
-  case "$(uname | tr '[:upper:]' '[:lower:]')" in
-    darwin) platform="darwin" ;;
-    linux) platform="linux" ;;
-    *)
-      fail "Platform '$(uname -m)' not supported!"
-      ;;
-  esac
+	case "$(uname | tr '[:upper:]' '[:lower:]')" in
+	darwin) platform="darwin" ;;
+	linux) platform="linux" ;;
+	*)
+		fail "Platform '$(uname -m)' not supported!"
+		;;
+	esac
 
-  echo -n $platform
+	echo -n $platform
 }
 
 download_release() {
-	local version filename url
-	local platform=$(get_platform)
-	local arch=$(get_arch)
+	local version filename url platform arch
+	platform=$(get_platform)
+	arch=$(get_arch)
 	version="$1"
 	filename="$2"
 
@@ -88,7 +88,7 @@ install_version() {
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
-		
+
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
