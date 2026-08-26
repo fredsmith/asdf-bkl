@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-GH_REPO="https://github.com/gopatchy/bkl"
+BKL_REPO="https://git.bkl.sh/bkl/bkl"
 TOOL_NAME="bkl"
 TOOL_TEST="bkl --version"
 
@@ -13,23 +13,19 @@ fail() {
 
 curl_opts=(-fsSL)
 
-if [ -n "${GITHUB_API_TOKEN:-}" ]; then
-	curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
-fi
-
 sort_versions() {
 	sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' |
 		LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
 }
 
-list_github_tags() {
-	git ls-remote --tags --refs "$GH_REPO" |
+list_repo_tags() {
+	git ls-remote --tags --refs "$BKL_REPO" |
 		grep -o 'refs/tags/.*' | cut -d/ -f3- |
 		sed 's/^v//'
 }
 
 list_all_versions() {
-	list_github_tags
+	list_repo_tags
 }
 
 get_arch() {
@@ -67,7 +63,7 @@ download_release() {
 	version="$1"
 	filename="$2"
 
-	url="${GH_REPO}/releases/download/v${version}/bkl-${platform}-${arch}-v${version}.tar.gz"
+	url="${BKL_REPO}/releases/download/v${version}/bkl-${platform}-${arch}-v${version}.tar.gz"
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
