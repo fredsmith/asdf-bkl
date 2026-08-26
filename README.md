@@ -2,7 +2,7 @@
 
 # asdf-bkl [![Build](https://github.com/fredsmith/asdf-bkl/actions/workflows/build.yml/badge.svg)](https://github.com/fredsmith/asdf-bkl/actions/workflows/build.yml) [![Lint](https://github.com/fredsmith/asdf-bkl/actions/workflows/lint.yml/badge.svg)](https://github.com/fredsmith/asdf-bkl/actions/workflows/lint.yml)
 
-[bkl](https://bkl.gopatchy.io/) plugin for the [asdf version manager](https://asdf-vm.com).
+[bkl](https://bkl.sh/) plugin for the [asdf version manager](https://asdf-vm.com).
 
 </div>
 
